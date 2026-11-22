@@ -41,7 +41,7 @@ Chaque fiche contient : l'objectif, la notion NestJS (avec un exemple de code qu
 ## Comment travailler
 
 1. Créez votre dépôt depuis ce modèle (« Use this template »), clonez-le, installez (`npm install`).
-2. **Créez votre branche personnelle** nommée `prenom-tp-nestjs` (par exemple `lan-tp-nestjs`) et travaillez **uniquement** dessus :
+2. **Créez votre branche personnelle** nommée `prenom-tp-nestjs` (par exemple `angela-tp-nestjs`) et travaillez **uniquement** dessus :
 
    ```bash
    git switch -c prenom-tp-nestjs

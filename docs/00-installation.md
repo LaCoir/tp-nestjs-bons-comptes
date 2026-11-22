@@ -1,4 +1,4 @@
-# Étape 0 — Installation et découverte (à faire AVANT la séance)
+# Étape 0 - Installation et découverte (à faire AVANT la séance)
 
 ⏱️ 15 minutes environ. Si un point bloque, notez l'erreur et venez nous voir en début de séance.
 
@@ -9,8 +9,8 @@
 | **Node.js** (LTS) | **24 LTS recommandé**, à partir de **24.15.0** | `node -v` doit afficher `v24.15.0` ou une version ultérieure de la série 24 |
 | **npm** | fourni avec Node | `npm -v` |
 | **Git** | récent | `git --version` |
-| **VS Code** | récent | — |
-| Compte **GitHub** | — | — |
+| **VS Code** | récent | - |
+| Compte **GitHub** | - | - |
 
 > ⚠️ Utilisez de préférence **Node 24 LTS, à partir de 24.15.0**. Certaines dépendances exigent une version précise de Node. Node 22 est également compatible à partir de **22.22.3** ; les versions 23 et 25 ne sont pas prises en charge. Téléchargez Node sur <https://nodejs.org>.
 
@@ -25,17 +25,18 @@
 
 1. Ouvrez l'adresse du dépôt modèle donnée par l'enseignant (`https://github.com/LaCoir/tp-nestjs-bons-comptes`).
 2. Cliquez sur le bouton vert **« Use this template »** → **« Create a new repository »**.
-3. Choisissez votre compte comme propriétaire et un nom contenant votre prénom (par ex. `lan-tp-nestjs-bons-comptes`), la visibilité **Private** de préférence, puis **Create repository**.
+3. Choisissez votre compte comme propriétaire et un nom contenant votre prénom (par exemple, si l'étudiante s'appelle Angela : `angela-tp-nestjs-bons-comptes`), sélectionnez la visibilité **Public**, puis **Create repository**.
 
    > Ne cochez pas « Include all branches » : seule la branche principale est utile.
-4. Clonez **votre** dépôt en remplaçant le compte et le nom de l'exemple par les vôtres :
+   Votre nouveau dépôt contient déjà les fichiers et les tests du TP.
+4. **Clonez votre dépôt en remplaçant le compte et le nom de l'exemple par les vôtres :**
 
    ```bash
-   git clone https://github.com/<votre-compte>/lan-tp-nestjs-bons-comptes.git
-   cd lan-tp-nestjs-bons-comptes
+   git clone https://github.com/<votre-compte>/angela-tp-nestjs-bons-comptes.git
+   cd angela-tp-nestjs-bons-comptes
    code .
    ```
-5. **Créez votre branche personnelle** `prenom-tp-nestjs` (par exemple `lan-tp-nestjs`) et poussez-la :
+5. **Créez votre branche personnelle** `prenom-tp-nestjs` (par exemple `angela-tp-nestjs`) et poussez-la :
 
    ```bash
    git switch -c prenom-tp-nestjs
@@ -83,7 +84,7 @@ npm run test:etapes
 
 Les tests des étapes 1 à 3 sont **rouges** : c'est normal, ils passeront au fil du TP. Pour vérifier que le reste de l'application est sain : `npx vitest run src` doit être entièrement vert.
 
-## 6. Découvrir le projet avec Swagger (étape 0 — 10 min en séance)
+## 6. Découvrir le projet avec Swagger (étape 0 - 10 min en séance)
 
 Swagger est la **documentation interactive** de l'API : la liste de toutes les routes, avec ce qu'elles reçoivent et ce qu'elles renvoient.
 
@@ -103,7 +104,7 @@ Ouvrez dans l'ordre :
 3. `src/wallets/wallets.module.ts`, `wallets.controller.ts`, `wallets.service.ts` : un module **complet** que vous prendrez pour modèle.
 4. `src/expenses/` : le module que vous allez compléter (presque vide).
 
-## FAQ — erreurs fréquentes
+## FAQ - erreurs fréquentes
 
 <details>
 <summary><strong>« node » n'est pas reconnu comme commande (Windows)</strong></summary>
@@ -144,7 +145,7 @@ Un serveur ou un test encore lancé verrouille un fichier de Prisma. Arrêtez to
 </details>
 
 <details>
-<summary><strong><code>Cannot find module './xxx.service'</code> ou <code>ERR_MODULE_NOT_FOUND</code> — les imports locaux doivent se terminer par <code>.js</code></strong></summary>
+<summary><strong><code>Cannot find module './xxx.service'</code> ou <code>ERR_MODULE_NOT_FOUND</code> - les imports locaux doivent se terminer par <code>.js</code></strong></summary>
 
 Ce projet utilise les **modules ES (ESM)**. Dans ce mode, **tous les imports de fichiers locaux doivent se terminer par `.js`**, même si le fichier source est en `.ts` :
 
