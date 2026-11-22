@@ -82,9 +82,9 @@ Arrêtez le serveur avec `Ctrl+C`. Lancez enfin les tests :
 npm run test:etapes
 ```
 
-Les tests des étapes 1 à 3 sont **rouges** : c'est normal, ils passeront au fil du TP. Pour vérifier que le reste de l'application est sain : `npx vitest run src` doit être entièrement vert.
+Les tests des étapes 1 à 3 sont **rouges** : c'est normal avant de coder. Les étapes 1 et 2 constituent le parcours essentiel ; l'étape 3 est facultative et ses tests restent rouges tant que vous ne la réalisez pas. Pour vérifier que le reste de l'application est sain : `npx vitest run src` doit être entièrement vert.
 
-## 6. Découvrir le projet avec Swagger (étape 0 - 10 min en séance)
+## 6. Découvrir le projet avec Swagger (étape 0 - 5 min en séance)
 
 Swagger est la **documentation interactive** de l'API : la liste de toutes les routes, avec ce qu'elles reçoivent et ce qu'elles renvoient.
 
@@ -93,9 +93,9 @@ Swagger est la **documentation interactive** de l'API : la liste de toutes les r
 1. Lancez `npm run start:dev` et ouvrez <http://localhost:3000/api/docs>.
 2. Parcourez les sections : **users**, **auth**, **wallets**, **invitations**… Dépliez une route (par exemple `POST /wallets`) : regardez le corps attendu (*Request body*), les codes de réponse possibles et les exemples.
 3. Repérez le bouton **Authorize** 🔒 : les routes protégées par `JwtAuthGuard` affichent un cadenas. Vous écrirez bientôt des routes protégées de la même façon.
-4. Cherchez la section **expenses** : elle est **vide**. Chaque route que vous écrivez y apparaîtra après rechargement de la page : c'est votre premier retour visuel.
+4. Cherchez la section **expenses** : elle peut être absente tant qu'aucune route de dépenses n'est déclarée. Chaque route que vous écrivez y apparaîtra après rechargement de la page : c'est votre premier retour visuel.
 
-### Visite guidée du code (5 minutes)
+### Visite guidée du code
 
 Ouvrez dans l'ordre :
 

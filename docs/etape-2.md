@@ -132,10 +132,12 @@ git commit -m "étape 2"
 git push
 ```
 
+Le parcours essentiel est terminé. Si vous avez encore du temps, passez au [bonus : suppression d'une dépense](etape-3.md).
+
 ## 6. Bloqué ?
 
 ```bash
 npm run rattrapage -- 2
 ```
 
-Récupère le code de la fin de l'étape 2. Ensuite : [étape 3](etape-3.md).
+Récupère le code de la fin de l'étape 2. Vous pouvez ensuite réaliser le [bonus](etape-3.md).

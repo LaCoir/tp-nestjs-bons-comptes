@@ -1,6 +1,6 @@
-# Bonus - Clôturer le porte-monnaie : qui doit payer, qui doit recevoir
+# Hors parcours du TP - Clôturer le porte-monnaie : qui doit payer, qui doit recevoir
 
-⏱️ Facultatif (si vous avez terminé les étapes 1 à 3) · Notion : **service métier + tests**
+Cette fiche est conservée à titre de référence et ne fait pas partie du parcours demandé aux étudiants. Notion : **service métier + tests**.
 
 ## 1. Objectif
 

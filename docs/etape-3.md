@@ -1,6 +1,6 @@
-# Étape 3 - Supprimer une dépense : Guard et décorateur personnalisé
+# Bonus - Étape 3 : supprimer une dépense avec un Guard et un décorateur personnalisé
 
-⏱️ 20 minutes · Notion : **Guard, décorateur `@CurrentUser()`, `ForbiddenException`**
+⏱️ Facultatif, 20 à 30 minutes après les étapes 1 et 2 · Notion : **Guard, décorateur `@CurrentUser()`, `ForbiddenException`**
 
 ## 1. Objectif
 
@@ -173,4 +173,4 @@ git push
 npm run rattrapage -- 3
 ```
 
-Récupère le code de la fin de l'étape 3. Ensuite, si vous avez le temps : le [bonus](bonus.md).
+Récupère le code de la fin de l'étape 3.

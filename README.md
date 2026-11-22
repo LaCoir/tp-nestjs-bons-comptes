@@ -4,7 +4,7 @@ Atelier de 2 heures · Master 2 MIAGE · Université de Lille · UE *Infrastruct
 
 « Les bons comptes » est une application de gestion de **porte-monnaie partagé** : des amis créent un porte-monnaie, s'invitent, déclarent leurs dépenses, puis **clôturent** le porte-monnaie pour savoir qui doit rembourser qui. Le backend est écrit avec **NestJS** (TypeScript).
 
-Une partie de l'application est déjà écrite (comptes, porte-monnaies, invitations). **Vous écrivez la gestion des dépenses** - lister, créer, supprimer - étape par étape. Le calcul de la clôture est proposé en **bonus**.
+Une partie de l'application est déjà écrite (comptes, porte-monnaies, invitations). **Vous écrivez la gestion des dépenses** : lister et créer. La suppression est proposée en **bonus**.
 
 > 💡 **Aucune base de données n'est nécessaire.** Les tests démarrent une vraie application Nest en mémoire et remplacent la base par une fausse base : vous n'avez ni identifiant, ni URL, ni configuration à gérer.
 
@@ -15,7 +15,7 @@ Une partie de l'application est déjà écrite (comptes, porte-monnaies, invitat
 - lire la structure d'un projet NestJS (modules, contrôleurs, services) ;
 - utiliser l'**injection de dépendances** ;
 - valider des données entrantes avec des **DTO** et `class-validator` ;
-- protéger une route avec un **Guard** et créer un **décorateur personnalisé** ;
+- en bonus, protéger une route avec un **Guard** et créer un **décorateur personnalisé** ;
 - tester une API NestJS avec **Vitest** (même API que Jest : `describe`, `it`, `expect`).
 
 ## Prérequis
@@ -28,13 +28,15 @@ Une partie de l'application est déjà écrite (comptes, porte-monnaies, invitat
 
 ## Déroulé
 
+Le créneau de l'atelier est de **2 heures**. Si le temps manque, visez le parcours essentiel en **60 minutes**, après l'installation réalisée avant la séance. Ces durées sont indicatives.
+
 | Étape | Fonctionnalité | Notion NestJS | Durée |
 |---|---|---|---|
-| [0](docs/00-installation.md) | Installation, découverte du projet, Swagger | Structure d'un projet Nest | 15 min |
+| [0](docs/00-installation.md) | Découverte du projet et de Swagger (installation avant la séance) | Structure d'un projet Nest | 5 min |
 | [1](docs/etape-1.md) | `GET` lister les dépenses d'un porte-monnaie + total | Module, Controller, Service, injection de dépendances | 25 min |
 | [2](docs/etape-2.md) | `POST` déclarer une dépense (montant > 0, dépenseur optionnel) | DTO, `class-validator`, `ValidationPipe` | 25 min |
-| [3](docs/etape-3.md) | `DELETE` : seul le dépenseur (ou le créateur) peut supprimer | Guard, décorateur `@CurrentUser()`, `ForbiddenException` | 30 min |
-| [Bonus](docs/bonus.md) | Clôturer le porte-monnaie : qui doit payer / recevoir combien | Service métier + tests | - |
+| Conclusion | Vérifier les tests et sauvegarder le travail | Bilan | 5 min |
+| [Bonus - étape 3](docs/etape-3.md) | `DELETE` : seul le dépenseur (ou le créateur) peut supprimer | Guard, décorateur `@CurrentUser()`, `ForbiddenException` | 20 à 30 min |
 
 Chaque fiche contient : l'objectif, la notion NestJS (avec un exemple de code qui n'est **pas** la solution), la liste de ce qu'il faut faire, des indices repliables, un **checkpoint** et la marche à suivre si vous êtes bloqué.
 
@@ -53,10 +55,10 @@ Chaque fiche contient : l'objectif, la notion NestJS (avec un exemple de code qu
 4. Vérifiez votre travail avec le test de l'étape :
 
    ```bash
-   npm run test:etape1   # puis test:etape2, test:etape3, et test:bonus
+   npm run test:etape1   # puis npm run test:etape2
    ```
 
-   Au départ les tests sont **tous rouges** - c'est normal, c'est votre travail de les faire passer. Leurs messages vous disent ce qui était attendu et ce qui a été reçu.
+   Au départ les tests des exercices sont **rouges** - c'est normal, c'est votre travail de les faire passer. Pour le bonus, utilisez `npm run test:etape3` si vous le réalisez. Leurs messages vous disent ce qui était attendu et ce qui a été reçu.
 5. Lancez `npm run start:dev` et ouvrez Swagger : <http://localhost:3000/api/docs>. Chaque route que vous écrivez y apparaît (le bouton *Try it out* ne fonctionne pas : il n'y a pas de base de données, ce sont les tests qui vérifient le comportement).
 
 ### Les TODO
@@ -65,7 +67,7 @@ Dans VS Code, ouvrez la recherche globale (`Ctrl+Maj+F`) et cherchez `TODO étap
 
 ## Rattrapage
 
-Si vous êtes en retard ou bloqué : le dépôt **solutions** contient une branche par étape : `etape-0`, `etape-1`, `etape-2`, `etape-3` et `bonus`. La branche `etape-N` contient le code **terminé jusqu'à la fin de l'étape N**.
+Si vous êtes en retard ou bloqué : le dépôt **solutions** contient une branche par étape : `etape-0`, `etape-1`, `etape-2` et `etape-3`. La branche `etape-N` contient le code **terminé jusqu'à la fin de l'étape N**.
 
 Pour récupérer le code corrigé de l'étape 2, par exemple :
 
@@ -112,7 +114,7 @@ src/
 │   ├── expenses.helpers.ts    fonctions fournies (select, accès, état du porte-monnaie)
 │   ├── dto/create-expense.dto.ts
 │   └── guards/expense-owner.guard.ts
-├── closure/                   ← bonus : clôture et bilan
+├── closure/                   clôture et bilan (hors parcours du TP)
 │   ├── balance-calculator.ts  calcul des parts et des soldes
 │   ├── balance-data.ts        lecture en base (fournie)
 │   └── closure.service.ts
@@ -138,4 +140,4 @@ NestJS 12 · TypeScript · Prisma · Swagger (`@nestjs/swagger`) · Vitest + Sup
 
 ## Intégration continue
 
-Le workflow `.github/workflows/test.yml` compile le projet et lance les tests à chaque `push` (donc aussi sur votre branche personnelle). Sur le dépôt de départ, les tests des étapes échouent volontairement : l'étape correspondante est marquée « échec ignoré » dans GitHub Actions.
+Le workflow `.github/workflows/test.yml` compile le projet et lance les tests à chaque `push` (donc aussi sur votre branche personnelle). Sur le dépôt de départ, les tests des étapes échouent volontairement : l'étape correspondante est marquée « échec ignoré » dans GitHub Actions. Le workflow lance aussi les tests de clôture conservés dans le dépôt ; leur résultat n'est pas requis pour ce TP et leur échec est ignoré.
