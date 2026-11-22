@@ -1,4 +1,4 @@
-# Bonus — Clôturer le porte-monnaie : qui doit payer, qui doit recevoir
+# Bonus - Clôturer le porte-monnaie : qui doit payer, qui doit recevoir
 
 ⏱️ Facultatif (si vous avez terminé les étapes 1 à 3) · Notion : **service métier + tests**
 
@@ -11,12 +11,12 @@ Quand le porte-monnaie est clôturé, calculer pour chaque membre sa **part**, s
 Un **service métier** concentre les règles de l'application. Ici, le calcul lui-même est une **fonction pure** (`calculateBalances` : des nombres en entrée, des nombres en sortie, aucune base de données) : elle se teste très facilement. Le service Nest (`ClosureService`) l'orchestre : il vérifie les droits, lit la base, appelle la fonction pure, renvoie le résultat. Cette séparation rend la logique réutilisable et testable **sans** serveur ni base.
 
 ```ts
-// pricing.ts — fonction pure (exemple, pas la solution)
+// pricing.ts - fonction pure (exemple, pas la solution)
 export function applyDiscount(priceInCents: number, percent: number) {
   return priceInCents - Math.floor((priceInCents * percent) / 100);
 }
 
-// pricing.service.ts — le service orchestre
+// pricing.service.ts - le service orchestre
 @Injectable()
 export class PricingService {
   constructor(private readonly prisma: PrismaService) {}
@@ -64,13 +64,15 @@ Avec un total de 10 001 centimes (reste 2), ce sont `a` **et** `b` qui paient 1 
 
 ## 4. À faire
 
+Dans VS Code, ouvrez votre dépôt personnel cloné. Depuis sa racine, les fichiers de ce bonus se trouvent dans le dossier `src\closure`.
+
 Cherchez `TODO bonus`.
 
-1. **`src/closure/balance-calculator.ts`** — écrivez `calculateBalances(totalAmount, members)` :
+1. **`src/closure/balance-calculator.ts`** - écrivez `calculateBalances(totalAmount, members)` :
    - triez les membres par `userId` (sur une **copie** : `[...members].sort(...)`, la fonction `byUserId` est fournie) ;
    - calculez la part de chacun avec la règle ci-dessus ;
    - renvoyez `{ balances, transfers }` où `balances` contient, pour chaque membre, `{ userId, name, paidAmount, shareAmount, balance }` et `transfers` vaut `computeTransfers(balances)` (fonction fournie plus bas dans le fichier).
-2. **`src/closure/closure.service.ts`** — écrivez `getBalance(walletId, userId)` :
+2. **`src/closure/closure.service.ts`** - écrivez `getBalance(walletId, userId)` :
    1. `await this.checkClosedWalletAccess(walletId, userId)` (fournie : 404 / 403 / 409 si le porte-monnaie est encore ouvert) ;
    2. `const data = await loadBalanceData(this.prisma, walletId)` (fournie : lit le total et ce que chacun a payé) ;
    3. appelez `calculateBalances(data.totalAmount, data.memberPayments)` ;
@@ -82,7 +84,7 @@ La clôture elle-même (`POST /wallets/:id/close`, réservée au créateur) est 
 ## 5. Indices
 
 <details>
-<summary>Indice 1 — les deux nombres à calculer</summary>
+<summary>Indice 1 - les deux nombres à calculer</summary>
 
 ```ts
 const baseShare = Math.floor(totalAmount / sortedMembers.length);
@@ -92,30 +94,30 @@ const remainder = totalAmount % sortedMembers.length;
 </details>
 
 <details>
-<summary>Indice 2 — qui reçoit le centime en plus ?</summary>
+<summary>Indice 2 - qui reçoit le centime en plus ?</summary>
 
 Quand vous parcourez les membres triés avec `.map((member, index) => …)`, le membre reçoit 1 centime de plus **si `index < remainder`**.
 
 </details>
 
 <details>
-<summary>Indice 3 — le solde</summary>
+<summary>Indice 3 - le solde</summary>
 
 `balance = member.paidAmount - shareAmount` : positif = à recevoir, négatif = à payer.
 
 </details>
 
 <details>
-<summary>Indice 4 — des NaN dans les résultats</summary>
+<summary>Indice 4 - des NaN dans les résultats</summary>
 
 Un `NaN` vient presque toujours d'une division par zéro (aucun membre) ou d'un champ mal nommé (`paidAmount` ; pas `paid` ni `amount`).
 
 </details>
 
 <details>
-<summary>Indice 5 — comment lire un message de test</summary>
+<summary>Indice 5 - comment lire un message de test</summary>
 
-`Part de A — valeur attendue : 3334 centimes, valeur reçue : 3333 centimes` : la valeur reçue est ce que **votre code** a produit. Reprenez l'exemple chiffré ci-dessus et vérifiez à la main qui doit recevoir le centime en plus.
+`Part de A - valeur attendue : 3334 centimes, valeur reçue : 3333 centimes` : la valeur reçue est ce que **votre code** a produit. Reprenez l'exemple chiffré ci-dessus et vérifiez à la main qui doit recevoir le centime en plus.
 
 </details>
 

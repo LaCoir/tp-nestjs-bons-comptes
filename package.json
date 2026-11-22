@@ -2,7 +2,7 @@
   "name": "tp-nestjs-bons-comptes",
   "version": "1.0.0",
   "type": "module",
-  "description": "TP NestJS — Les bons comptes (M2 MIAGE, Université de Lille)",
+  "description": "TP NestJS - Les bons comptes (M2 MIAGE, Université de Lille)",
   "private": true,
   "license": "UNLICENSED",
   "engines": {

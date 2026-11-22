@@ -1,4 +1,4 @@
-// Bonus — Clôture : qui doit payer / recevoir combien
+// Bonus - Clôture : qui doit payer / recevoir combien
 // Lancer : npm run test:bonus
 import 'reflect-metadata';
 import request from 'supertest';
@@ -43,12 +43,12 @@ function compute(totalAmount: number, members: MemberPayment[]) {
 function expectValue(label: string, expected: number, received: number | undefined) {
   expect(
     received,
-    `${label} — valeur attendue : ${expected} centimes, valeur reçue : ${received}`,
+    `${label} - valeur attendue : ${expected} centimes, valeur reçue : ${received}`,
   ).toBe(expected);
 }
 
-describe('Bonus — Clôture et calcul des soldes', () => {
-  describe('calculateBalances — cas simples (division exacte)', () => {
+describe('Bonus - Clôture et calcul des soldes', () => {
+  describe('calculateBalances - cas simples (division exacte)', () => {
     it('3 membres, 90,00 € au total : chacun doit 30,00 € (3000 centimes)', () => {
       const { byId } = compute(9000, [member(A, 6000), member(B, 3000), member(C, 0)]);
 
@@ -80,7 +80,7 @@ describe('Bonus — Clôture et calcul des soldes', () => {
 
       expectValue('Part de A', 5000, byId[A]?.shareAmount);
       expectValue('Solde de A', 0, byId[A]?.balance);
-      expect(transfers, `Aucun virement attendu — reçu : ${JSON.stringify(transfers)}`).toEqual([]);
+      expect(transfers, `Aucun virement attendu - reçu : ${JSON.stringify(transfers)}`).toEqual([]);
     });
 
     it('total de 0 centime : toutes les parts et tous les soldes valent 0', () => {
@@ -91,7 +91,7 @@ describe('Bonus — Clôture et calcul des soldes', () => {
     });
   });
 
-  describe('calculateBalances — répartition du reste (centimes)', () => {
+  describe('calculateBalances - répartition du reste (centimes)', () => {
     it('100,00 € à 3 (reste 1) : le premier userId paie 1 centime de plus (3334 / 3333 / 3333)', () => {
       const { byId } = compute(10000, [member(A, 10000), member(B, 0), member(C, 0)]);
 
@@ -138,7 +138,7 @@ describe('Bonus — Clôture et calcul des soldes', () => {
 
         expect(
           sumOfShares,
-          `Somme des parts — attendue : ${total}, reçue : ${sumOfShares}. Aucun centime ne doit être perdu ni créé.`,
+          `Somme des parts - attendue : ${total}, reçue : ${sumOfShares}. Aucun centime ne doit être perdu ni créé.`,
         ).toBe(total);
       },
     );
@@ -152,7 +152,7 @@ describe('Bonus — Clôture et calcul des soldes', () => {
       ]);
       const sum = balances.reduce((total, row) => total + row.balance, 0);
 
-      expect(sum, `Somme des soldes — attendue : 0, reçue : ${sum}`).toBe(0);
+      expect(sum, `Somme des soldes - attendue : 0, reçue : ${sum}`).toBe(0);
     });
 
     it('toutes les valeurs sont des entiers (jamais de virgule)', () => {
@@ -161,19 +161,19 @@ describe('Bonus — Clôture et calcul des soldes', () => {
       for (const row of balances) {
         expect(
           Number.isInteger(row.shareAmount) && Number.isInteger(row.balance),
-          `Les montants de ${row.userId} doivent être entiers — part : ${row.shareAmount}, solde : ${row.balance}. Utilisez Math.floor et l'opérateur %.`,
+          `Les montants de ${row.userId} doivent être entiers - part : ${row.shareAmount}, solde : ${row.balance}. Utilisez Math.floor et l'opérateur %.`,
         ).toBe(true);
       }
     });
   });
 
-  describe('calculateBalances — virements proposés', () => {
+  describe('calculateBalances - virements proposés', () => {
     it('les débiteurs remboursent le créancier : B → A 3333 et C → A 3333', () => {
       const { transfers } = compute(10000, [member(A, 10000), member(B, 0), member(C, 0)]);
 
       expect(
         transfers,
-        `Virements attendus : B→A 3333 et C→A 3333 — reçus : ${JSON.stringify(transfers)}. Renvoyez computeTransfers(balances).`,
+        `Virements attendus : B→A 3333 et C→A 3333 - reçus : ${JSON.stringify(transfers)}. Renvoyez computeTransfers(balances).`,
       ).toEqual([
         { fromUserId: B, toUserId: A, amount: 3333 },
         { fromUserId: C, toUserId: A, amount: 3333 },
@@ -195,7 +195,7 @@ describe('Bonus — Clôture et calcul des soldes', () => {
 
       expect(
         remaining,
-        `Après les virements, tous les soldes devraient être 0 — reçu : ${JSON.stringify(remaining)}`,
+        `Après les virements, tous les soldes devraient être 0 - reçu : ${JSON.stringify(remaining)}`,
       ).toEqual({ [A]: 0, [B]: 0, [C]: 0, [D]: 0 });
     });
   });
@@ -228,7 +228,7 @@ describe('Bonus — Clôture et calcul des soldes', () => {
       expect(response.body.walletId).toBe('w-closed');
       expect(
         response.body.totalAmount,
-        `totalAmount attendu : 9000 — reçu : ${response.body.totalAmount}`,
+        `totalAmount attendu : 9000 - reçu : ${response.body.totalAmount}`,
       ).toBe(9000);
 
       const balances = Object.fromEntries(
@@ -238,11 +238,11 @@ describe('Bonus — Clôture et calcul des soldes', () => {
       );
       expect(
         balances,
-        `Soldes attendus : Alice +4500, Bob −4500 — reçus : ${JSON.stringify(balances)}`,
+        `Soldes attendus : Alice +4500, Bob −4500 - reçus : ${JSON.stringify(balances)}`,
       ).toEqual({ [ALICE]: 4500, [BOB]: -4500 });
       expect(
         response.body.transfers,
-        `Virement attendu : Bob → Alice 4500 — reçu : ${JSON.stringify(response.body.transfers)}`,
+        `Virement attendu : Bob → Alice 4500 - reçu : ${JSON.stringify(response.body.transfers)}`,
       ).toEqual([{ fromUserId: BOB, toUserId: ALICE, amount: 4500 }]);
     });
 

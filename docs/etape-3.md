@@ -1,4 +1,4 @@
-# Étape 3 — Supprimer une dépense : Guard et décorateur personnalisé
+# Étape 3 - Supprimer une dépense : Guard et décorateur personnalisé
 
 ⏱️ 20 minutes · Notion : **Guard, décorateur `@CurrentUser()`, `ForbiddenException`**
 
@@ -18,7 +18,7 @@ Un **Guard** est exécuté **avant** la méthode du contrôleur et décide si la
 Un guard peut être injecté comme un service (il reçoit `PrismaService` dans son constructeur) et s'applique avec `@UseGuards(...)`, sur une classe entière ou sur **une seule méthode**. Vous connaissez déjà `JwtAuthGuard`, posé sur la classe : il vérifie le jeton et remplit `request.user`.
 
 ```ts
-// project-member.guard.ts — exemple sur un autre sujet (pas la solution)
+// project-member.guard.ts - exemple sur un autre sujet (pas la solution)
 @Injectable()
 export class ProjectMemberGuard implements CanActivate {
   constructor(private readonly prisma: PrismaService) {}
@@ -49,7 +49,7 @@ remove(@Param('projectId') projectId: string) { /* … */ }
 Écrire `@Req() request` puis `request.user.userId` est répétitif. Avec `createParamDecorator`, on fabrique son propre décorateur de paramètre :
 
 ```ts
-// current-locale.decorator.ts — exemple (pas la solution)
+// current-locale.decorator.ts - exemple (pas la solution)
 export const CurrentLocale = createParamDecorator(
   (suffix: string | undefined, context: ExecutionContext) => {
     const request = context.switchToHttp().getRequest();
@@ -66,29 +66,31 @@ hello(@CurrentLocale() locale: string) { /* … */ }
 
 ## 3. À faire
 
+Dans VS Code, ouvrez votre dépôt personnel cloné. Depuis sa racine, les fichiers de cette étape se trouvent dans `src\expenses` et son sous-dossier `guards`, ainsi que dans `src\auth\decorators`.
+
 Cherchez `TODO étape 3`.
 
-1. **`src/auth/decorators/current-user.decorator.ts`** — complétez `@CurrentUser()` :
+1. **`src/auth/decorators/current-user.decorator.ts` - décorateur `@CurrentUser()`** : complétez le décorateur :
    - `@CurrentUser()` renvoie `request.user` (c'est-à-dire `{ userId }`) ;
    - `@CurrentUser('userId')` renvoie directement `request.user.userId`.
-2. **`src/expenses/guards/expense-owner.guard.ts`** — complétez `canActivate` :
+2. **`src/expenses/guards/expense-owner.guard.ts` - classe `ExpenseOwnerGuard`** : complétez la méthode `canActivate` :
    1. lire `walletId` et `id` dans `request.params`, et `userId` dans `request.user` ;
    2. chercher la dépense avec `this.prisma.expense.findFirst({ where: { id, walletId }, ... })` ;
    3. introuvable → `NotFoundException` ;
    4. ni dépenseur (`paidById`) ni créateur (`createdById`) → `ForbiddenException` ;
    5. sinon renvoyer `true`.
-3. **`src/expenses/expenses.service.ts`** — écrivez `remove(walletId, expenseId)` (l'autorisation est faite par le guard, pas ici) :
+3. **`src/expenses/expenses.service.ts` - classe `ExpensesService`** : écrivez la méthode `remove(walletId, expenseId)` (l'autorisation est faite par le guard, pas ici) :
    - le porte-monnaie doit exister (`NotFoundException`) et être ouvert (`assertWalletOpen`) ;
    - supprimer la dépense (`this.prisma.expense.delete`) ;
    - mettre à jour `updatedAt` du porte-monnaie.
-4. **`src/expenses/expenses.controller.ts`** :
-   - ajoutez la route `@Delete(':id')` avec `@UseGuards(ExpenseOwnerGuard)` et `@HttpCode(HttpStatus.NO_CONTENT)` (réponse `204`, sans corps) ;
+4. **`src/expenses/expenses.controller.ts` - classe `ExpensesController`** :
+   - ajoutez la méthode `remove` avec `@Delete(':id')`, `@UseGuards(ExpenseOwnerGuard)` et `@HttpCode(HttpStatus.NO_CONTENT)` (réponse `204`, sans corps) ;
    - **refactorisez** `findAll` et `create` pour utiliser `@CurrentUser('userId') userId: string` à la place de `@Req()`.
 
 ## 4. Indices
 
 <details>
-<summary>Indice 1 — le décorateur</summary>
+<summary>Indice 1 - le décorateur</summary>
 
 ```ts
 export const CurrentUser = createParamDecorator(
@@ -102,7 +104,7 @@ export const CurrentUser = createParamDecorator(
 </details>
 
 <details>
-<summary>Indice 2 — structure du guard</summary>
+<summary>Indice 2 - structure du guard</summary>
 
 ```ts
 const request = context.switchToHttp().getRequest<AuthenticatedRequest>();
@@ -118,28 +120,28 @@ const expense = await this.prisma.expense.findFirst({
 </details>
 
 <details>
-<summary>Indice 3 — pourquoi chercher avec <code>{ id, walletId }</code> et pas seulement <code>id</code> ?</summary>
+<summary>Indice 3 - pourquoi chercher avec <code>{ id, walletId }</code> et pas seulement <code>id</code> ?</summary>
 
 Une dépense d'un *autre* porte-monnaie ne doit pas être supprimable via l'URL de celui-ci. Avec les deux critères, elle est « introuvable » (404).
 
 </details>
 
 <details>
-<summary>Indice 4 — la condition de refus</summary>
+<summary>Indice 4 - la condition de refus</summary>
 
 On refuse si l'utilisateur n'est **ni** le dépenseur **ni** le créateur : `expense.paidById !== userId && expense.createdById !== userId`.
 
 </details>
 
 <details>
-<summary>Indice 5 — le guard n'est pas appelé (le test attend 403 mais reçoit 204)</summary>
+<summary>Indice 5 - le guard n'est pas appelé (le test attend 403 mais reçoit 204)</summary>
 
 Vérifiez `@UseGuards(ExpenseOwnerGuard)` **sur la méthode** `remove` et l'import de `ExpenseOwnerGuard` avec son `.js`.
 
 </details>
 
 <details>
-<summary>Indice 6 — « Nest can't resolve dependencies of the ExpenseOwnerGuard »</summary>
+<summary>Indice 6 - « Nest can't resolve dependencies of the ExpenseOwnerGuard »</summary>
 
 Le guard doit être `@Injectable()` et son constructeur doit déclarer `PrismaService` avec son type (c'est déjà le cas dans le squelette fourni : ne le modifiez pas).
 

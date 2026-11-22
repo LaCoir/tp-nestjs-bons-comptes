@@ -1,4 +1,4 @@
-// Étape 1 — Lister les dépenses d'un porte-monnaie (GET /wallets/:walletId/expenses)
+// Étape 1 - Lister les dépenses d'un porte-monnaie (GET /wallets/:walletId/expenses)
 // Lancer : npm run test:etape1
 import 'reflect-metadata';
 import { afterEach, describe, expect, it } from 'vitest';
@@ -17,7 +17,7 @@ import {
   type TestApp,
 } from './support/test-app.js';
 
-describe('Étape 1 — Lister les dépenses (GET /wallets/:walletId/expenses)', () => {
+describe('Étape 1 - Lister les dépenses (GET /wallets/:walletId/expenses)', () => {
   let testApp: TestApp;
 
   afterEach(async () => {
@@ -80,7 +80,7 @@ describe('Étape 1 — Lister les dépenses (GET /wallets/:walletId/expenses)', 
       );
       expect(
         Array.isArray(response.body.items),
-        `La réponse doit contenir un tableau « items » — reçu : ${JSON.stringify(response.body)}`,
+        `La réponse doit contenir un tableau « items » - reçu : ${JSON.stringify(response.body)}`,
       ).toBe(true);
       expect(
         response.body.items.length,
@@ -97,7 +97,7 @@ describe('Étape 1 — Lister les dépenses (GET /wallets/:walletId/expenses)', 
       expectStatus(response, 200, 'La route GET doit exister.');
       expect(
         response.body.totalAmount,
-        `totalAmount attendu : 9099 — reçu : ${response.body.totalAmount}`,
+        `totalAmount attendu : 9099 - reçu : ${response.body.totalAmount}`,
       ).toBe(9099);
     });
 
@@ -126,7 +126,7 @@ describe('Étape 1 — Lister les dépenses (GET /wallets/:walletId/expenses)', 
       const dates: string[] = response.body.items.map((item: { date: string }) => item.date);
       expect(
         dates,
-        `Les dates doivent être en ordre décroissant (orderBy: date desc) — reçu : ${dates.join(', ')}`,
+        `Les dates doivent être en ordre décroissant (orderBy: date desc) - reçu : ${dates.join(', ')}`,
       ).toEqual(['2026-10-25', '2026-10-25', '2026-10-20']);
     });
 
@@ -166,7 +166,7 @@ describe('Étape 1 — Lister les dépenses (GET /wallets/:walletId/expenses)', 
       expect(response.body.items, 'items devrait être un tableau vide').toEqual([]);
       expect(
         response.body.totalAmount,
-        `totalAmount attendu : 0 — reçu : ${response.body.totalAmount} (indice : l'opérateur ?? )`,
+        `totalAmount attendu : 0 - reçu : ${response.body.totalAmount} (indice : l'opérateur ?? )`,
       ).toBe(0);
     });
 

@@ -1,4 +1,4 @@
-// Étape 2 — Déclarer une dépense (POST /wallets/:walletId/expenses)
+// Étape 2 - Déclarer une dépense (POST /wallets/:walletId/expenses)
 // Lancer : npm run test:etape2
 import 'reflect-metadata';
 import { plainToInstance } from 'class-transformer';
@@ -30,13 +30,13 @@ async function errorsFor(input: Record<string, unknown>) {
   return errors.map((error) => error.property);
 }
 
-describe('Étape 2 — Déclarer une dépense (POST /wallets/:walletId/expenses)', () => {
-  describe('CreateExpenseDto — validation avec class-validator', () => {
+describe('Étape 2 - Déclarer une dépense (POST /wallets/:walletId/expenses)', () => {
+  describe('CreateExpenseDto - validation avec class-validator', () => {
     it('accepte une dépense valide', async () => {
       const properties = await errorsFor(VALID);
       expect(
         properties,
-        `Une dépense valide ne doit produire aucune erreur — erreurs sur : ${properties.join(', ')}`,
+        `Une dépense valide ne doit produire aucune erreur - erreurs sur : ${properties.join(', ')}`,
       ).toEqual([]);
     });
 
@@ -158,7 +158,7 @@ describe('Étape 2 — Déclarer une dépense (POST /wallets/:walletId/expenses)
       expectStatus(response, 201, 'La création doit réussir.');
       expect(
         response.body.paidBy?.id,
-        `Dépenseur attendu : ${BOB} (utilisateur connecté) — reçu : ${response.body.paidBy?.id}`,
+        `Dépenseur attendu : ${BOB} (utilisateur connecté) - reçu : ${response.body.paidBy?.id}`,
       ).toBe(BOB);
     });
 
@@ -174,7 +174,7 @@ describe('Étape 2 — Déclarer une dépense (POST /wallets/:walletId/expenses)
       const stored = testApp.prisma.data.expenses.at(-1);
       expect(
         stored.createdById,
-        `createdById attendu : ${ALICE} (celle qui saisit) — reçu : ${stored.createdById}`,
+        `createdById attendu : ${ALICE} (celle qui saisit) - reçu : ${stored.createdById}`,
       ).toBe(ALICE);
       expect(stored.paidById).toBe(BOB);
     });
@@ -288,7 +288,7 @@ describe('Étape 2 — Déclarer une dépense (POST /wallets/:walletId/expenses)
       expectStatus(response, 200, 'GET doit toujours fonctionner (étape 1).');
       expect(
         response.body.totalAmount,
-        `Total attendu : 10349 (9099 + 1250) — reçu : ${response.body.totalAmount}`,
+        `Total attendu : 10349 (9099 + 1250) - reçu : ${response.body.totalAmount}`,
       ).toBe(10349);
     });
 

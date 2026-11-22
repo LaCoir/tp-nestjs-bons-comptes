@@ -62,7 +62,7 @@ export class ClosureService {
     });
   }
 
-  // TODO bonus : écrivez getBalance(walletId, userId) — le bilan d'un porte-monnaie CLÔTURÉ.
+  // TODO bonus : écrivez getBalance(walletId, userId) - le bilan d'un porte-monnaie CLÔTURÉ.
   //   1. await this.checkClosedWalletAccess(walletId, userId)   (fournie : 404 / 403 / 409)
   //   2. const data = await loadBalanceData(this.prisma, walletId)   (fournie : lit la base)
   //        → data.totalAmount : total des dépenses ; data.memberPayments : ce que chacun a payé

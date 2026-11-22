@@ -1,4 +1,4 @@
-# Étape 1 — Lister les dépenses d'un porte-monnaie
+# Étape 1 - Lister les dépenses d'un porte-monnaie
 
 ⏱️ 20 minutes · Notion : **Module, Controller, Service, injection de dépendances**
 
@@ -16,7 +16,7 @@ Une application Nest est un assemblage de trois types de briques :
 
 Vous ne créez jamais vous-même un service avec `new`. Vous le **demandez dans le constructeur** et Nest le fournit : c'est l'**injection de dépendances**. Nest sait quoi fournir grâce au *type* du paramètre, à condition que le service soit listé dans `providers` du module.
 
-Exemple (sur un autre sujet — les notes de cours — ce n'est pas la solution) :
+Exemple (sur un autre sujet - les notes de cours - ce n'est pas la solution) :
 
 ```ts
 // notes.service.ts
@@ -58,19 +58,21 @@ export class NotesModule {}
 
 ## 3. À faire
 
+Dans VS Code, ouvrez votre dépôt personnel cloné. Depuis sa racine, les fichiers de cette étape se trouvent dans le dossier `src\expenses`.
+
 Cherchez `TODO étape 1` dans le projet.
 
-1. **`src/expenses/expenses.service.ts`**
+1. **`src/expenses/expenses.service.ts` - classe `ExpensesService`**
    - importez `PrismaService` et ajoutez le **constructeur** qui l'injecte ;
    - écrivez `async findAll(walletId: string, userId: string)` :
      1. vérifier l'accès avec la fonction fournie `assertMemberOfWallet(this.prisma, walletId, userId)` (elle lève 404 / 403 toute seule) ;
      2. lire les dépenses : `this.prisma.expense.findMany(...)` filtrées sur le `walletId`, triées de la plus récente à la plus ancienne, avec `select: expenseSelect` ;
      3. calculer le total : `this.prisma.expense.aggregate(...)` avec `_sum: { amount: true }` ;
-     4. renvoyer `{ items, totalAmount }` — les `items` passent par `toExpenseItem`, et le total vaut `0` (et non `null`) s'il n'y a aucune dépense.
-2. **`src/expenses/expenses.controller.ts`**
+     4. renvoyer `{ items, totalAmount }` - les `items` passent par `toExpenseItem`, et le total vaut `0` (et non `null`) s'il n'y a aucune dépense.
+2. **`src/expenses/expenses.controller.ts` - classe `ExpensesController`**
    - importez `ExpensesService`, injectez-le dans le constructeur ;
    - ajoutez une méthode `findAll` décorée par `@Get()`, qui lit `walletId` avec `@Param('walletId')` et l'utilisateur connecté avec `@Req()` (`request.user.userId`), puis **délègue** au service.
-3. **`src/expenses/expenses.module.ts`**
+3. **`src/expenses/expenses.module.ts` - classe `ExpensesModule`**
    - déclarez le contrôleur dans `controllers` et le service dans `providers`.
 
 Les fonctions `expenseSelect`, `toExpenseItem` et `assertMemberOfWallet` sont déjà écrites dans `src/expenses/expenses.helpers.ts` : lisez-les, puis utilisez-les.
@@ -78,7 +80,7 @@ Les fonctions `expenseSelect`, `toExpenseItem` et `assertMemberOfWallet` sont d�
 ## 4. Indices
 
 <details>
-<summary>Indice 1 — le constructeur du service</summary>
+<summary>Indice 1 - le constructeur du service</summary>
 
 ```ts
 constructor(private readonly prisma: PrismaService) {}
@@ -89,7 +91,7 @@ Le mot-clé `private readonly` devant le paramètre crée automatiquement l'attr
 </details>
 
 <details>
-<summary>Indice 2 — filtrer et trier avec Prisma</summary>
+<summary>Indice 2 - filtrer et trier avec Prisma</summary>
 
 ```ts
 this.prisma.expense.findMany({
@@ -102,21 +104,21 @@ this.prisma.expense.findMany({
 </details>
 
 <details>
-<summary>Indice 3 — le total</summary>
+<summary>Indice 3 - le total</summary>
 
 `aggregate` renvoie `{ _sum: { amount: number | null } }`. La valeur est `null` quand il n'y a aucune ligne : utilisez `?? 0`.
 
 </details>
 
 <details>
-<summary>Indice 4 — le test dit que la route n'existe pas (404)</summary>
+<summary>Indice 4 - le test dit que la route n'existe pas (404)</summary>
 
 Vérifiez trois choses : `@Get()` est bien sur la méthode ; le contrôleur est dans `controllers` du module ; le module est importé dans `app.module.ts` (c'est déjà fait).
 
 </details>
 
 <details>
-<summary>Indice 5 — Nest dit qu'il « ne peut pas résoudre les dépendances »</summary>
+<summary>Indice 5 - Nest dit qu'il « ne peut pas résoudre les dépendances »</summary>
 
 Le service oublié dans `providers`, ou un `import` sans `.js`, ou un paramètre de constructeur sans type. Relisez le message : il nomme la classe concernée.
 

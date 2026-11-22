@@ -1,4 +1,4 @@
-# Étape 2 — Déclarer une dépense
+# Étape 2 - Déclarer une dépense
 
 ⏱️ 20 minutes · Notion : **DTO, `class-validator`, `ValidationPipe`**
 
@@ -12,7 +12,7 @@ Les données envoyées par un client ne sont **jamais fiables**. Nest les décri
 
 Notre `ValidationPipe` est configuré avec `whitelist: true` et `forbidNonWhitelisted: true` : **une propriété sans aucun décorateur `class-validator` est rejetée** (400), et un champ inconnu aussi. Il faut donc décorer *chaque* champ.
 
-Exemple (autre sujet — ce n'est pas la solution) :
+Exemple (autre sujet - ce n'est pas la solution) :
 
 ```ts
 import { IsEmail, IsInt, IsOptional, IsString, Max, MaxLength, Min } from 'class-validator';
@@ -43,9 +43,11 @@ create(@Body() dto: CreateReviewDto) { /* dto est valide ici */ }
 
 ## 3. À faire
 
+Dans VS Code, ouvrez votre dépôt personnel cloné. Depuis sa racine, les fichiers de cette étape se trouvent dans `src\expenses` et son sous-dossier `dto`.
+
 Cherchez `TODO étape 2`.
 
-1. **`src/expenses/dto/create-expense.dto.ts`** — ajoutez les décorateurs de validation :
+1. **`src/expenses/dto/create-expense.dto.ts` - classe `CreateExpenseDto`** : ajoutez les décorateurs de validation :
 
    | Champ | Règle |
    |---|---|
@@ -54,18 +56,18 @@ Cherchez `TODO étape 2`.
    | `date` | texte au format `AAAA-MM-JJ`, date ISO valide |
    | `paidById` | **optionnel** ; s'il est présent, c'est un UUID |
 
-2. **`src/expenses/expenses.service.ts`** — écrivez `create(walletId, userId, dto)` :
+2. **`src/expenses/expenses.service.ts` - classe `ExpensesService`** : écrivez la méthode `create(walletId, userId, dto)` :
    1. vérifier l'accès (`assertMemberOfWallet`) puis que le porte-monnaie est ouvert (`assertWalletOpen`, lève 409 s'il est clôturé) ;
    2. dépenseur = `dto.paidById ?? userId` ; s'il est différent de l'utilisateur connecté, il doit être **membre** (`isMemberOfWallet`), sinon `ForbiddenException` ;
    3. créer la dépense avec `this.prisma.expense.create(...)` : `createdById` est **toujours** l'utilisateur connecté, `date` est `new Date(dto.date)` ;
    4. **mettre à jour `updatedAt` du porte-monnaie** (règle métier : chaque action rafraîchit cette date) avec `this.prisma.wallet.update(...)` ;
    5. renvoyer `toExpenseItem(...)`.
-3. **`src/expenses/expenses.controller.ts`** — ajoutez la route `@Post()` avec `@Body() dto: CreateExpenseDto` et déléguez au service.
+3. **`src/expenses/expenses.controller.ts` - classe `ExpensesController`** : ajoutez la méthode `create` avec `@Post()` et `@Body() dto: CreateExpenseDto`, puis déléguez au service.
 
 ## 4. Indices
 
 <details>
-<summary>Indice 1 — les décorateurs du DTO</summary>
+<summary>Indice 1 - les décorateurs du DTO</summary>
 
 `title` : `@IsString()`, `@IsNotEmpty()`, `@MaxLength(100)`.
 `amount` : `@IsInt()` et `@Min(1)`.
@@ -75,21 +77,21 @@ Cherchez `TODO étape 2`.
 </details>
 
 <details>
-<summary>Indice 2 — « amount doit être > 0 »</summary>
+<summary>Indice 2 - « amount doit être > 0 »</summary>
 
 `@Min(1)` : un entier plus petit que 1 (0, −5…) est refusé. Combiné à `@IsInt()`, 12.5 est refusé aussi.
 
 </details>
 
 <details>
-<summary>Indice 3 — tout renvoie 400, même une requête correcte</summary>
+<summary>Indice 3 - tout renvoie 400, même une requête correcte</summary>
 
 Un champ du DTO n'a **aucun** décorateur `class-validator` : `whitelist` + `forbidNonWhitelisted` le rejettent. Décorez chaque champ, y compris `paidById` (`@IsOptional()` compte comme un décorateur).
 
 </details>
 
 <details>
-<summary>Indice 4 — appeler Prisma pour créer</summary>
+<summary>Indice 4 - appeler Prisma pour créer</summary>
 
 ```ts
 this.prisma.expense.create({
@@ -103,7 +105,7 @@ Tous les champs de `data` sont obligatoires pour Prisma : `walletId`, `title`, `
 </details>
 
 <details>
-<summary>Indice 5 — mettre à jour updatedAt</summary>
+<summary>Indice 5 - mettre à jour updatedAt</summary>
 
 ```ts
 await this.prisma.wallet.update({

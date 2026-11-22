@@ -84,7 +84,7 @@ export function expectStatus(
   }
   expect(
     response.status,
-    `Statut HTTP attendu : ${expected} — reçu : ${response.status}. ${hint}\nCorps de la réponse : ${JSON.stringify(response.body)}`,
+    `Statut HTTP attendu : ${expected} - reçu : ${response.status}. ${hint}\nCorps de la réponse : ${JSON.stringify(response.body)}`,
   ).toBe(expected);
 }
 
@@ -105,7 +105,7 @@ export async function expectRejection(
     `On attendait une exception ${errorType.name}, mais on a obtenu : ${
       thrown === undefined
         ? 'aucune exception (la méthode a réussi)'
-        : `${(thrown as Error)?.constructor?.name} — ${(thrown as Error)?.message}`
+        : `${(thrown as Error)?.constructor?.name} - ${(thrown as Error)?.message}`
     }. ${hint}`,
   ).toBe(true);
 }

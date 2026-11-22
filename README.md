@@ -1,10 +1,10 @@
-# TP NestJS — « Les bons comptes »
+# TP NestJS - « Les bons comptes »
 
 Atelier de 2 heures · Master 2 MIAGE · Université de Lille · UE *Infrastructures & Frameworks*
 
 « Les bons comptes » est une application de gestion de **porte-monnaie partagé** : des amis créent un porte-monnaie, s'invitent, déclarent leurs dépenses, puis **clôturent** le porte-monnaie pour savoir qui doit rembourser qui. Le backend est écrit avec **NestJS** (TypeScript).
 
-Une partie de l'application est déjà écrite (comptes, porte-monnaies, invitations). **Vous écrivez la gestion des dépenses** — lister, créer, supprimer — étape par étape. Le calcul de la clôture est proposé en **bonus**.
+Une partie de l'application est déjà écrite (comptes, porte-monnaies, invitations). **Vous écrivez la gestion des dépenses** - lister, créer, supprimer - étape par étape. Le calcul de la clôture est proposé en **bonus**.
 
 > 💡 **Aucune base de données n'est nécessaire.** Les tests démarrent une vraie application Nest en mémoire et remplacent la base par une fausse base : vous n'avez ni identifiant, ni URL, ni configuration à gérer.
 
@@ -34,7 +34,7 @@ Une partie de l'application est déjà écrite (comptes, porte-monnaies, invitat
 | [1](docs/etape-1.md) | `GET` lister les dépenses d'un porte-monnaie + total | Module, Controller, Service, injection de dépendances | 25 min |
 | [2](docs/etape-2.md) | `POST` déclarer une dépense (montant > 0, dépenseur optionnel) | DTO, `class-validator`, `ValidationPipe` | 25 min |
 | [3](docs/etape-3.md) | `DELETE` : seul le dépenseur (ou le créateur) peut supprimer | Guard, décorateur `@CurrentUser()`, `ForbiddenException` | 30 min |
-| [Bonus](docs/bonus.md) | Clôturer le porte-monnaie : qui doit payer / recevoir combien | Service métier + tests | — |
+| [Bonus](docs/bonus.md) | Clôturer le porte-monnaie : qui doit payer / recevoir combien | Service métier + tests | - |
 
 Chaque fiche contient : l'objectif, la notion NestJS (avec un exemple de code qui n'est **pas** la solution), la liste de ce qu'il faut faire, des indices repliables, un **checkpoint** et la marche à suivre si vous êtes bloqué.
 
@@ -56,7 +56,7 @@ Chaque fiche contient : l'objectif, la notion NestJS (avec un exemple de code qu
    npm run test:etape1   # puis test:etape2, test:etape3, et test:bonus
    ```
 
-   Au départ les tests sont **tous rouges** — c'est normal, c'est votre travail de les faire passer. Leurs messages vous disent ce qui était attendu et ce qui a été reçu.
+   Au départ les tests sont **tous rouges** - c'est normal, c'est votre travail de les faire passer. Leurs messages vous disent ce qui était attendu et ce qui a été reçu.
 5. Lancez `npm run start:dev` et ouvrez Swagger : <http://localhost:3000/api/docs>. Chaque route que vous écrivez y apparaît (le bouton *Try it out* ne fonctionne pas : il n'y a pas de base de données, ce sont les tests qui vérifient le comportement).
 
 ### Les TODO

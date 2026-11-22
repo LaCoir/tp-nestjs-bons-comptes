@@ -59,7 +59,7 @@ function byAmountThenUserId(
   return byUserId(a, b);
 }
 
-// FOURNIE — Algorithme glouton : le plus gros débiteur rembourse le plus gros
+// FOURNIE - Algorithme glouton : le plus gros débiteur rembourse le plus gros
 // créancier, et ainsi de suite. Au plus n - 1 virements, sans garantie de minimum.
 export function computeTransfers(
   balances: { userId: string; balance: number }[],

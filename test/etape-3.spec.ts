@@ -1,4 +1,4 @@
-// Étape 3 — Supprimer une dépense : ExpenseOwnerGuard + @CurrentUser()
+// Étape 3 - Supprimer une dépense : ExpenseOwnerGuard + @CurrentUser()
 // Lancer : npm run test:etape3
 import 'reflect-metadata';
 import {
@@ -49,7 +49,7 @@ function fakeContext(request: unknown): ExecutionContext {
   } as unknown as ExecutionContext;
 }
 
-describe('Étape 3 — Supprimer une dépense (Guard + décorateur personnalisé)', () => {
+describe('Étape 3 - Supprimer une dépense (Guard + décorateur personnalisé)', () => {
   describe('Décorateur @CurrentUser()', () => {
     let testApp: TestApp;
 
@@ -66,7 +66,7 @@ describe('Étape 3 — Supprimer une dépense (Guard + décorateur personnalisé
       expectStatus(response, 200, 'Le contrôleur de test doit répondre.');
       expect(
         response.body.user,
-        `@CurrentUser() devait renvoyer { userId: "${ALICE}" } — reçu : ${JSON.stringify(response.body.user)}. Indice : context.switchToHttp().getRequest().user`,
+        `@CurrentUser() devait renvoyer { userId: "${ALICE}" } - reçu : ${JSON.stringify(response.body.user)}. Indice : context.switchToHttp().getRequest().user`,
       ).toEqual({ userId: ALICE });
     });
 
@@ -79,7 +79,7 @@ describe('Étape 3 — Supprimer une dépense (Guard + décorateur personnalisé
       expectStatus(response, 200, 'Le contrôleur de test doit répondre.');
       expect(
         response.body.userId,
-        `@CurrentUser('userId') devait renvoyer "${BOB}" — reçu : ${JSON.stringify(response.body.userId)}. Le premier argument de la fonction est le nom du champ demandé.`,
+        `@CurrentUser('userId') devait renvoyer "${BOB}" - reçu : ${JSON.stringify(response.body.userId)}. Le premier argument de la fonction est le nom du champ demandé.`,
       ).toBe(BOB);
     });
   });
