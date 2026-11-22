@@ -20,7 +20,7 @@ Une partie de l'application est déjà écrite (comptes, porte-monnaies, invitat
 
 ## Prérequis
 
-- Node.js **22 ou plus récent**, Git, VS Code, un compte GitHub.
+- Node.js **24 LTS** (version 24.15.0 ou ultérieure dans la série 24), Git, VS Code, un compte GitHub.
 - Notions de TypeScript / JavaScript et de HTTP (GET, POST, DELETE, codes de statut).
 - **Aucune connaissance de NestJS n'est demandée.**
 

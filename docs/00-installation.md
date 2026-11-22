@@ -6,13 +6,13 @@
 
 | Outil | Version | Vérification |
 |---|---|---|
-| **Node.js** (LTS) | **22 ou plus récent** — obligatoire | `node -v` doit afficher `v22.x.x` ou plus |
+| **Node.js** (LTS) | **24 LTS recommandé**, à partir de **24.15.0** | `node -v` doit afficher `v24.15.0` ou une version ultérieure de la série 24 |
 | **npm** | fourni avec Node | `npm -v` |
 | **Git** | récent | `git --version` |
 | **VS Code** | récent | — |
 | Compte **GitHub** | — | — |
 
-> ⚠️ **Node 22 minimum.** Avec une version plus ancienne (18, 20…), l'installation ou le démarrage échouera. Téléchargez la version « LTS » sur <https://nodejs.org>.
+> ⚠️ Utilisez de préférence **Node 24 LTS, à partir de 24.15.0**. Certaines dépendances exigent une version précise de Node. Node 22 est également compatible à partir de **22.22.3** ; les versions 23 et 25 ne sont pas prises en charge. Téléchargez Node sur <https://nodejs.org>.
 
 ### Extensions VS Code conseillées
 
@@ -25,14 +25,14 @@
 
 1. Ouvrez l'adresse du dépôt modèle donnée par l'enseignant (`https://github.com/LaCoir/tp-nestjs-bons-comptes`).
 2. Cliquez sur le bouton vert **« Use this template »** → **« Create a new repository »**.
-3. Choisissez votre compte comme propriétaire, un nom (par ex. `tp-nestjs-bons-comptes`), visibilité **Private** de préférence, puis **Create repository**.
+3. Choisissez votre compte comme propriétaire et un nom contenant votre prénom (par ex. `lan-tp-nestjs-bons-comptes`), la visibilité **Private** de préférence, puis **Create repository**.
 
    > Ne cochez pas « Include all branches » : seule la branche principale est utile.
-4. Clonez **votre** dépôt :
+4. Clonez **votre** dépôt en remplaçant le compte et le nom de l'exemple par les vôtres :
 
    ```bash
-   git clone https://github.com/<votre-compte>/tp-nestjs-bons-comptes.git
-   cd tp-nestjs-bons-comptes
+   git clone https://github.com/<votre-compte>/lan-tp-nestjs-bons-comptes.git
+   cd lan-tp-nestjs-bons-comptes
    code .
    ```
 5. **Créez votre branche personnelle** `prenom-tp-nestjs` (par exemple `lan-tp-nestjs`) et poussez-la :
@@ -122,7 +122,7 @@ Dans PowerShell, exécutez une fois : `Set-ExecutionPolicy -Scope CurrentUser Re
 <details>
 <summary><strong>Version de Node trop ancienne (<code>Unsupported engine</code>, <code>SyntaxError</code>…)</strong></summary>
 
-Le projet exige **Node 22 ou plus**. Vérifiez `node -v`. Mettez à jour depuis <https://nodejs.org> (LTS) ou avec `nvm install 22 && nvm use 22`. Après le changement : supprimez `node_modules` et relancez `npm install`.
+Vérifiez `node -v`, puis installez **Node 24 LTS, à partir de 24.15.0**, depuis <https://nodejs.org> ou avec `nvm install 24` puis `nvm use 24`. Après le changement, relancez `npm ci`.
 
 </details>
 
